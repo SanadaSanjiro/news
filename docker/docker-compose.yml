@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:17-alpine # Используем свежую версию на Alpine
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: news_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Сохранение данных
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - pgnetwork
+
+volumes:
+  pgdata: # Именованный том для данных
+
+networks:
+  pgnetwork:
