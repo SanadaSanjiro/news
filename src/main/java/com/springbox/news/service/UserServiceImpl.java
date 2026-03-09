@@ -1,10 +1,13 @@
 package com.springbox.news.service;
 
+import com.springbox.news.exception.EntityNotFoundException;
 import com.springbox.news.model.User;
 import com.springbox.news.repository.UserRepository;
+import com.springbox.news.utils.BeanUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 @Service
@@ -19,7 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(long id) {
-        return userRepository.findById(id).orElseThrow();
+        return userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        MessageFormat.format ("No user with id = {0} found", id)));
     }
 
     @Override
@@ -29,8 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        User oldUser = findById(user.getId());
-        return userRepository.save(oldUser);
+        User existedUser = findById(user.getId());
+        BeanUtils.copyNonNullProperties(user, existedUser);
+        return userRepository.save(existedUser);
     }
 
     @Override
