@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.List;
 
 /**
  * Класс описывает модель новости
@@ -30,6 +31,10 @@ public class News {
     @ManyToOne
     @JoinColumn(name="category_id")
     NewsCategory category;
+
+    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    List<Comment> comments;
 
     @Column(name="news_title")
     String title;
