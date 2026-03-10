@@ -26,10 +26,6 @@ public class NewsCategory {
     @Column(name="cat_name")
     String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    List<News> newsList;
-
     @CreationTimestamp
     Instant createdAt;
 

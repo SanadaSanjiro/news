@@ -26,7 +26,7 @@ public class User {
     @Column(name="user_name")
     String name;
 
-    @OneToMany(mappedBy = "news_author", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     @ToString.Exclude
     List<News> newsList;
 

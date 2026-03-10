@@ -5,10 +5,12 @@ import com.springbox.news.model.NewsCategory;
 import com.springbox.news.repository.CategoryRepository;
 import com.springbox.news.utils.BeanUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository repository;

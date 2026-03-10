@@ -25,7 +25,7 @@ public class News {
 
     @ManyToOne
     @JoinColumn(name="author_id")
-    User news_author;
+    User author;
 
     @ManyToOne
     @JoinColumn(name="category_id")
