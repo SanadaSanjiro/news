@@ -26,11 +26,11 @@ public class User {
     @Column(name="user_name")
     String name;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "newsAuthor", cascade = CascadeType.ALL)
     @ToString.Exclude
     List<News> newsList;
 
-    @OneToMany(mappedBy = "comment_author", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment_author", cascade = CascadeType.ALL)
     @ToString.Exclude
     List<Comment> comments;
 

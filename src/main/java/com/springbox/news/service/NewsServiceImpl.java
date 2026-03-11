@@ -37,7 +37,7 @@ public class NewsServiceImpl implements NewsService{
     public News save(News news) {
         User author = getUser(news.getId());
         NewsCategory category = getCategory(news.getCategory().getId());
-        news.setAuthor(author);
+        news.setNewsAuthor(author);
         news.setCategory(category);
         return repository.save(news);
     }
@@ -48,7 +48,7 @@ public class NewsServiceImpl implements NewsService{
         NewsCategory category = getCategory(news.getCategory().getId());
         News existedNews = findById(news.getId());
         BeanUtils.copyNonNullProperties(news, existedNews);
-        existedNews.setAuthor(author);
+        existedNews.setNewsAuthor(author);
         news.setCategory(category);
         return repository.save(existedNews);
     }

@@ -26,13 +26,13 @@ public class News {
 
     @ManyToOne
     @JoinColumn(name="author_id")
-    User author;
+    User newsAuthor;
 
     @ManyToOne
     @JoinColumn(name="category_id")
     NewsCategory category;
 
-    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "news", cascade = CascadeType.ALL)
     @ToString.Exclude
     List<Comment> comments;
 
