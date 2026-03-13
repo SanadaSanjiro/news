@@ -16,7 +16,8 @@ import java.util.List;
  * Предоставляет методы для преобразования объектов News в соответствующие Response и обратно
  */
 @DecoratedWith(NewsMapperDelegate.class)
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        uses = {UserMapperV1.class, CategoryMapperV1.class})
 public interface NewsMapperV1 {
 
     News requestToNews(UpsertNewsRequest request);

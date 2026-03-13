@@ -5,13 +5,11 @@ import com.springbox.news.service.CategoryService;
 import com.springbox.news.service.UserService;
 import com.springbox.news.web.model.UpsertNewsRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 /**
  * Класс-делегат, предоставляющий методы для преобразования объектов UpsertNewsRequest в News,
  * требующие дополнительной обработки, не предоставляемой MapStruct
  */
-@Component
 @RequiredArgsConstructor
 public abstract class NewsMapperDelegate implements NewsMapperV1{
     private final UserService userService;

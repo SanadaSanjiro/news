@@ -6,6 +6,9 @@ import lombok.Data;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * DTO, возвращающий одну новость со списком ее комментариев
+ */
 @Data
 public class NewsResponse {
     long id;
