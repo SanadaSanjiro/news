@@ -22,7 +22,7 @@ public interface NewsMapperV1 {
 
     News requestToNews(UpsertNewsRequest request);
 
-    @Mapping(source = "userId", target = "id")
+    @Mapping(source = "id", target = "id")
     News requestToNews(long id, UpsertNewsRequest request);
 
     NewsResponse newsToResponse(News news);

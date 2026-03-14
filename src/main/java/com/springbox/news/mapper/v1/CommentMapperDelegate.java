@@ -4,16 +4,20 @@ import com.springbox.news.model.Comment;
 import com.springbox.news.service.NewsService;
 import com.springbox.news.service.UserService;
 import com.springbox.news.web.model.UpsertCommentRequest;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Класс-делегат, предоставляющий методы для преобразования объектов UpsertCommentRequest в Comment,
  * требующие дополнительной обработки, не предоставляемой MapStruct
  */
-@RequiredArgsConstructor
+
+@Component
 public abstract class CommentMapperDelegate implements CommentMapperV1 {
-    private final UserService userService;
-    private final NewsService newsService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private NewsService newsService;
 
     @Override
     public Comment requestToComment(UpsertCommentRequest request) {

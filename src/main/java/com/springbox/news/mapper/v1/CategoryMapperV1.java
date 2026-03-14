@@ -18,7 +18,7 @@ public interface CategoryMapperV1 {
 
     NewsCategory requestToCategory (UpsertNewsCategoryRequest request);
 
-    @Mapping(source = "userId", target = "id")
+    @Mapping(source = "id", target = "id")
     NewsCategory requestToCategory (long id, UpsertNewsCategoryRequest request);
 
     NewsCategoryResponse categoryToResponse(NewsCategory category);
