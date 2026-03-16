@@ -25,8 +25,10 @@ public interface NewsMapperV1 {
     @Mapping(source = "id", target = "id")
     News requestToNews(long id, UpsertNewsRequest request);
 
+    @Mapping(source = "newsAuthor", target = "author")
     NewsResponse newsToResponse(News news);
 
+    @Mapping(source = "newsAuthor", target = "author")
     NewsShortResponse newsToShortResponse(News news);
 
     List<NewsShortResponse> newsListToShortResponseList(List<News> news);

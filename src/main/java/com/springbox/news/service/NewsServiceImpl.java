@@ -35,7 +35,7 @@ public class NewsServiceImpl implements NewsService{
 
     @Override
     public News save(News news) {
-        User author = getUser(news.getId());
+        User author = getUser(news.getNewsAuthor().getId());
         NewsCategory category = getCategory(news.getCategory().getId());
         news.setNewsAuthor(author);
         news.setCategory(category);
@@ -44,7 +44,7 @@ public class NewsServiceImpl implements NewsService{
 
     @Override
     public News update(News news) {
-        User author = getUser(news.getId());
+        User author = getUser(news.getNewsAuthor().getId());
         NewsCategory category = getCategory(news.getCategory().getId());
         News existedNews = findById(news.getId());
         BeanUtils.copyNonNullProperties(news, existedNews);
