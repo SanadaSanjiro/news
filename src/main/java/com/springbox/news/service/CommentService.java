@@ -12,7 +12,7 @@ public interface CommentService {
      * Получить список комментариев по id новости
      * @return List<Comment> список комментариев к заданной новости
      */
-    List<Comment> findByNews (long newsId);
+    List<Comment> findByNewsId(long newsId);
 
     /**
      * Найти комментарий по его id

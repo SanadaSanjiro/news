@@ -18,16 +18,18 @@ public class CommentController {
     private final CommentService commentService;
     private final CommentMapperV1 commentMapper;
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<CommentListResponse> findByNewsId(
-            @RequestParam(value="newsID") Long newsID) {
+            @RequestParam(value="newsid") long newsID) {
+        System.out.println(newsID);
         return ResponseEntity.ok(
-                commentMapper.commentListToCommentListResponse(commentService.findByNews(newsID))
+                commentMapper.commentListToCommentListResponse(commentService.findByNewsId(newsID))
         );
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CommentResponse> findById(@PathVariable long id) {
+        System.out.println("Get method called");
         return ResponseEntity.ok(
                 commentMapper.commentToResponse(commentService.findById(id))
         );
