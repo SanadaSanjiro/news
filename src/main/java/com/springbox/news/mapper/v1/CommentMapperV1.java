@@ -3,6 +3,7 @@ package com.springbox.news.mapper.v1;
 import com.springbox.news.model.Comment;
 import com.springbox.news.web.model.CommentListResponse;
 import com.springbox.news.web.model.CommentResponse;
+import com.springbox.news.web.model.CommentShortResponse;
 import com.springbox.news.web.model.UpsertCommentRequest;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
@@ -20,6 +21,8 @@ public interface CommentMapperV1 {
     Comment requestToComment(long id, UpsertCommentRequest request);
 
     CommentResponse commentToResponse(Comment comment);
+
+    CommentShortResponse commentToShortResponse(Comment comment);
 
     List<CommentResponse> commentListToResponseList(List<Comment> comments);
 

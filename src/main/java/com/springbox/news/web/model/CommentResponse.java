@@ -11,7 +11,7 @@ import java.time.Instant;
 public class CommentResponse {
     long id;
     NewsShortResponse news;
-    UserResponse comment_author;
+    UserShortResponse comment_author;
     String text;
     Instant createdAt;
     Instant updatedAt;

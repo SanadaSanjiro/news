@@ -1,10 +1,7 @@
 package com.springbox.news.mapper.v1;
 
 import com.springbox.news.model.News;
-import com.springbox.news.web.model.NewsListResponse;
-import com.springbox.news.web.model.NewsResponse;
-import com.springbox.news.web.model.NewsShortResponse;
-import com.springbox.news.web.model.UpsertNewsRequest;
+import com.springbox.news.web.model.*;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -29,9 +26,11 @@ public interface NewsMapperV1 {
     NewsResponse newsToResponse(News news);
 
     @Mapping(source = "newsAuthor", target = "author")
+    NewsAbbreviatedResponse newsToAbbreviatedResponse(News news);
+
     NewsShortResponse newsToShortResponse(News news);
 
-    List<NewsShortResponse> newsListToShortResponseList(List<News> news);
+    List<NewsAbbreviatedResponse> newsListToShortResponseList(List<News> news);
 
     default NewsListResponse newsListToNewsListResponse(List<News> news) {
         NewsListResponse response = new NewsListResponse();

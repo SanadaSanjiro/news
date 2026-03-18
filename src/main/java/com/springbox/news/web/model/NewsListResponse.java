@@ -10,5 +10,5 @@ import java.util.List;
  */
 @Data
 public class NewsListResponse {
-    List<NewsShortResponse> news = new ArrayList<>();
+    List<NewsAbbreviatedResponse> news = new ArrayList<>();
 }
