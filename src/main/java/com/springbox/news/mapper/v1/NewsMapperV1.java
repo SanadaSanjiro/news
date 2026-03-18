@@ -25,16 +25,16 @@ public interface NewsMapperV1 {
     @Mapping(source = "newsAuthor", target = "author")
     NewsResponse newsToResponse(News news);
 
-    @Mapping(source = "newsAuthor", target = "author")
     NewsAbbreviatedResponse newsToAbbreviatedResponse(News news);
 
     NewsShortResponse newsToShortResponse(News news);
 
-    List<NewsAbbreviatedResponse> newsListToShortResponseList(List<News> news);
+    List<NewsAbbreviatedResponse> newsListToAbbreviatedResponseList(List<News> news);
 
     default NewsListResponse newsListToNewsListResponse(List<News> news) {
+        System.out.println(news);
         NewsListResponse response = new NewsListResponse();
-        response.setNews(newsListToShortResponseList(news));
+        response.setNews(newsListToAbbreviatedResponseList(news));
         return response;
     }
 }

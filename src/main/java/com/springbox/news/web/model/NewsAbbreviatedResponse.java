@@ -10,7 +10,7 @@ public class NewsAbbreviatedResponse {
     long id;
     UserShortResponse author;
     NewsCategoryShortResponse category;
-    int commentCount;                   // содержит количество комментариев к данной новости
+    long commentCount;                   // содержит количество комментариев к данной новости
     String title;
     String text;
 }
