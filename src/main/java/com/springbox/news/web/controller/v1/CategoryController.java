@@ -3,6 +3,7 @@ package com.springbox.news.web.controller.v1;
 import com.springbox.news.mapper.v1.CategoryMapperV1;
 import com.springbox.news.model.NewsCategory;
 import com.springbox.news.service.CategoryService;
+import com.springbox.news.web.model.NewsCategoryFilter;
 import com.springbox.news.web.model.NewsCategoryListResponse;
 import com.springbox.news.web.model.NewsCategoryResponse;
 import com.springbox.news.web.model.UpsertNewsCategoryRequest;
@@ -19,10 +20,10 @@ public class CategoryController {
     private final CategoryMapperV1 categoryMapper;
 
     @GetMapping
-    public ResponseEntity<NewsCategoryListResponse> findAll() {
+    public ResponseEntity<NewsCategoryListResponse> findAll(NewsCategoryFilter filter) {
         return ResponseEntity.ok(
                 categoryMapper.categoryListToNewsCategoryListResponse(
-                        categoryService.findAll()
+                        categoryService.findAll(filter).toList()
                 )
         );
     }

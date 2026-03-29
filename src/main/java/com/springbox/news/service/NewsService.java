@@ -1,18 +1,19 @@
 package com.springbox.news.service;
 
 import com.springbox.news.model.News;
-
-import java.util.List;
+import com.springbox.news.web.model.NewsFilter;
+import org.springframework.data.domain.Page;
 
 /**
  * Сервис для работы с новостями
  */
 public interface NewsService {
     /**
-     * Получить список всех новостей
-     * @return List<News> список со всеми новостями, либо пустой список, если ни одного пользователя не найдено
+     * Получить страницу с новостями согласно переданным условиям фильтрации
+     * @return Page<News> Объект Page со всеми новостями, отвечающими условиям фильтра
+     * либо пустой список, если таких не нашлось.
      */
-    List<News> findAll();
+    Page<News> findAll(NewsFilter filter);
 
     /**
      * Найти новость по ее id
@@ -22,7 +23,7 @@ public interface NewsService {
     News findById(long id);
 
     /**
-     * Сохранить новую новость
+     * Сохранить новость
      * @param news News данные новости для сохранения
      * @return News сохраненную новость
      */

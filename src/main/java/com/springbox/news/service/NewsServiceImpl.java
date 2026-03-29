@@ -6,13 +6,16 @@ import com.springbox.news.model.NewsCategory;
 import com.springbox.news.model.User;
 import com.springbox.news.repository.CategoryRepository;
 import com.springbox.news.repository.NewsRepository;
+import com.springbox.news.repository.NewsSpecification;
 import com.springbox.news.repository.UserRepository;
 import com.springbox.news.utils.BeanUtils;
+import com.springbox.news.web.model.NewsFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +25,9 @@ public class NewsServiceImpl implements NewsService{
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<News> findAll() {
-        return repository.findAll();
+    public Page<News> findAll(NewsFilter filter) {
+        return repository.findAll(NewsSpecification.withFilter(filter),
+                PageRequest.of(filter.getPageNumber(), filter.getPageSize()));
     }
 
     @Override

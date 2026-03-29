@@ -4,6 +4,7 @@ import com.springbox.news.mapper.v1.UserMapperV1;
 import com.springbox.news.model.User;
 import com.springbox.news.service.UserService;
 import com.springbox.news.web.model.UpsertUserRequest;
+import com.springbox.news.web.model.UserFilter;
 import com.springbox.news.web.model.UserListResponse;
 import com.springbox.news.web.model.UserResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +22,10 @@ public class UserController {
     private final UserMapperV1 userMapper;
 
     @GetMapping
-    public ResponseEntity<UserListResponse> findAll() {
+    public ResponseEntity<UserListResponse> findAll(UserFilter filter) {
         return ResponseEntity.ok(
                 userMapper.userListToUserListResponse(
-                        userService.findAll()
+                        userService.findAll(filter).toList()
                 )
         );
     }

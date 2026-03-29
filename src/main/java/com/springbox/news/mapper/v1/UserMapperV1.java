@@ -12,7 +12,7 @@ import org.mapstruct.ReportingPolicy;
 import java.util.List;
 
 /**
- * Предоставляет методы для преобразования объектов User в соответствующие Response и обратно
+ * Предоставляет методы для преобразования объектов User в соответствующие DTO и обратно
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapperV1 {

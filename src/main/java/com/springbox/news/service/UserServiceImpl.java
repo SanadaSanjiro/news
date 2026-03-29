@@ -4,11 +4,13 @@ import com.springbox.news.exception.EntityNotFoundException;
 import com.springbox.news.model.User;
 import com.springbox.news.repository.UserRepository;
 import com.springbox.news.utils.BeanUtils;
+import com.springbox.news.web.model.UserFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +18,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public Page<User> findAll(UserFilter filter) {
+        return userRepository.findAll(
+                PageRequest.of(filter.getPageNumber(), filter.getPageSize())
+        );
     }
 
     @Override

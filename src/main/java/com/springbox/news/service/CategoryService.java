@@ -1,8 +1,8 @@
 package com.springbox.news.service;
 
 import com.springbox.news.model.NewsCategory;
-
-import java.util.List;
+import com.springbox.news.web.model.NewsCategoryFilter;
+import org.springframework.data.domain.Page;
 
 /**
  * Сервис для работы с категориями новостей
@@ -12,7 +12,7 @@ public interface CategoryService {
      * Получить список всех категорий новостей
      * @return List<NewsCategory> список со всеми категориями новостей, либо пустой список, если таких еще нет
      */
-    List<NewsCategory> findAll();
+    Page<NewsCategory> findAll(NewsCategoryFilter filter);
 
     /**
      * Найти категорию новостей по id

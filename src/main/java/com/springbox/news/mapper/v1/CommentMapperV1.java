@@ -11,6 +11,9 @@ import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
+/**
+ * Предоставляет методы для преобразования объектов Comment в соответствующие DTO и обратно
+ */
 @DecoratedWith(CommentMapperDelegate.class)
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,
 uses = {UserMapperV1.class, NewsMapperV1.class})

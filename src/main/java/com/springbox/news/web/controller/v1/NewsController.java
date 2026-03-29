@@ -3,6 +3,7 @@ package com.springbox.news.web.controller.v1;
 import com.springbox.news.mapper.v1.NewsMapperV1;
 import com.springbox.news.model.News;
 import com.springbox.news.service.NewsService;
+import com.springbox.news.web.model.NewsFilter;
 import com.springbox.news.web.model.NewsListResponse;
 import com.springbox.news.web.model.NewsResponse;
 import com.springbox.news.web.model.UpsertNewsRequest;
@@ -19,8 +20,9 @@ public class NewsController {
     private final NewsMapperV1 newsMapper;
 
     @GetMapping
-    public ResponseEntity<NewsListResponse> findAll() {
-        return ResponseEntity.ok(newsMapper.newsListToNewsListResponse(newsService.findAll()));
+    public ResponseEntity<NewsListResponse> findAll(NewsFilter filter) {
+        return ResponseEntity.ok(newsMapper.newsListToNewsListResponse(
+                newsService.findAll(filter).toList()));
     }
 
     @GetMapping("/{id}")
