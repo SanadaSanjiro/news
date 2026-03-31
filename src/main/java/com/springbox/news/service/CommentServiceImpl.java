@@ -23,10 +23,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public List<Comment> findByNewsId(long newsId) {
-        System.out.println(newsId);
-        List<Comment> comments = repository.findCommentsByNews_Id(newsId);
-        System.out.println(comments);
-        return comments;
+        return repository.findCommentsByNews_Id(newsId);
     }
 
     @Override
