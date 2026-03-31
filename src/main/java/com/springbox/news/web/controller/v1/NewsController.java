@@ -7,6 +7,7 @@ import com.springbox.news.web.model.NewsFilter;
 import com.springbox.news.web.model.NewsListResponse;
 import com.springbox.news.web.model.NewsResponse;
 import com.springbox.news.web.model.UpsertNewsRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class NewsController {
     private final NewsMapperV1 newsMapper;
 
     @GetMapping
-    public ResponseEntity<NewsListResponse> findAll(NewsFilter filter) {
+    public ResponseEntity<NewsListResponse> findAll(@Valid NewsFilter filter) {
         return ResponseEntity.ok(newsMapper.newsListToNewsListResponse(
                 newsService.findAll(filter).toList()));
     }
