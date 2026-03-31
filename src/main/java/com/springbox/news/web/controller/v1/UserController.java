@@ -8,14 +8,17 @@ import com.springbox.news.web.model.UserFilter;
 import com.springbox.news.web.model.UserListResponse;
 import com.springbox.news.web.model.UserResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
+@Validated
 public class UserController {
 
     private final UserService userService;
@@ -32,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> findById(@PathVariable long id) {
+    public ResponseEntity<UserResponse> findById(@PathVariable @Min(0) long id) {
         return ResponseEntity.ok(
                 userMapper.userToResponse(
                         userService.findById(id)
@@ -41,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> create(@RequestBody UpsertUserRequest request) {
+    public ResponseEntity<UserResponse> create(@RequestBody @Valid UpsertUserRequest request) {
         User newUser = userService.save(userMapper.requestToUser(request));
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -49,14 +52,15 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> update(@PathVariable long id, @RequestBody UpsertUserRequest request) {
+    public ResponseEntity<UserResponse> update(@PathVariable @Min(0) long id,
+                                               @RequestBody @Valid UpsertUserRequest request) {
         User uodatedUser = userService.update(userMapper.requestToUser(id, request));
 
         return ResponseEntity.ok(userMapper.userToResponse(uodatedUser));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable long id) {
+    public ResponseEntity<Void> delete(@PathVariable @Min(0) long id) {
         userService.delete(id);
 
         return ResponseEntity.noContent().build();

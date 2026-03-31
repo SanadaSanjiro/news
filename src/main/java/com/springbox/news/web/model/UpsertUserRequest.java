@@ -1,5 +1,6 @@
 package com.springbox.news.web.model;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 /**
@@ -7,5 +8,6 @@ import lombok.Data;
  */
 @Data
 public class UpsertUserRequest {
+    @NotBlank
     String name;
 }
