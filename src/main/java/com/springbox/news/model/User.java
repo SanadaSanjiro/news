@@ -30,7 +30,7 @@ public class User {
     @ToString.Exclude
     List<News> newsList;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment_author", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "commentAuthor", cascade = CascadeType.ALL)
     @ToString.Exclude
     List<Comment> comments;
 

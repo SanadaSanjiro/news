@@ -30,7 +30,7 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name="comment_author_id")
     @ToString.Exclude
-    User comment_author;
+    User commentAuthor;
 
     @Column(name="comment_text")
     String text;

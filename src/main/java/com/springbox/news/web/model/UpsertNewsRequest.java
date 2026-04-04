@@ -1,5 +1,8 @@
 package com.springbox.news.web.model;
 
+import com.springbox.news.validation.Marker;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -7,8 +10,12 @@ import lombok.Data;
  */
 @Data
 public class UpsertNewsRequest {
+    @Min(0)
     long authorId;
+    @Min(value = 0, groups = Marker.OnCreate.class)
     long categoryId;
+    @Size(min = 3, max = 50)
     String title;
+    @Size(min = 3, max = 1000)
     String text;
 }

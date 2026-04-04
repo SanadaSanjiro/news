@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
-import java.util.List;
 
 /**
  * Класс описывает модель категории новостей
@@ -31,4 +30,9 @@ public class NewsCategory {
 
     @UpdateTimestamp
     Instant updatedAt;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

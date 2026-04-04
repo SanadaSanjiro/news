@@ -36,9 +36,9 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public Comment save(Comment comment) {
-        User existedUser = getUser(comment.getComment_author().getId());
+        User existedUser = getUser(comment.getCommentAuthor().getId());
         News existedNews = getNews(comment.getNews().getId());
-        comment.setComment_author(existedUser);
+        comment.setCommentAuthor(existedUser);
         comment.setNews(existedNews);
         return repository.save(comment);
     }
@@ -46,10 +46,10 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Comment update(Comment comment) {
         Comment existedComment = findById(comment.getId());
-        User existedUser = getUser(comment.getComment_author().getId());
+        User existedUser = getUser(comment.getCommentAuthor().getId());
         News existedNews = getNews(comment.getNews().getId());
         BeanUtils.copyNonNullProperties(comment, existedComment);
-        comment.setComment_author(existedUser);
+        comment.setCommentAuthor(existedUser);
         comment.setNews(existedNews);
         return repository.save(existedComment);
     }

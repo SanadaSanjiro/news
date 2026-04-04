@@ -69,7 +69,6 @@ public interface NewsMapperV1 {
      * @return NewsListResponse
      */
     default NewsListResponse newsListToNewsListResponse(List<News> news) {
-        System.out.println(news);
         NewsListResponse response = new NewsListResponse();
         response.setNews(newsListToAbbreviatedResponseList(news));
         return response;

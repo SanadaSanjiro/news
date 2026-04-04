@@ -23,7 +23,7 @@ public abstract class CommentMapperDelegate implements CommentMapperV1 {
     public Comment requestToComment(UpsertCommentRequest request) {
         Comment comment = new Comment();
         comment.setText(request.getText());
-        comment.setComment_author(userService.findById(request.getUserId()));
+        comment.setCommentAuthor(userService.findById(request.getUserId()));
         comment.setNews(newsService.findById(request.getNewsId()));
         return comment;
     }

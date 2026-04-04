@@ -48,7 +48,8 @@ public class CommentController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CommentResponse> update(@PathVariable @Min(0) long id,
-                                                  @RequestBody @Valid UpsertCommentRequest request) {
+                                                  @RequestBody @Valid UpsertCommentRequest request,
+                                                  @RequestHeader("X-User-Id") Long currentUserId) {
         Comment updatedComment = commentService.update(
                 commentMapper.requestToComment(id, request)
         );
@@ -57,7 +58,8 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable @Min(0) long id) {
+    public ResponseEntity<Void> delete(@PathVariable @Min(0) long id,
+                                       @RequestHeader("X-User-Id") Long currentUserId) {
         commentService.deleteById(id);
 
         return ResponseEntity.noContent().build();

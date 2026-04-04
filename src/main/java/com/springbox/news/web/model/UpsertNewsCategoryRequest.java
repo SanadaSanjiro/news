@@ -1,6 +1,6 @@
 package com.springbox.news.web.model;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -8,6 +8,6 @@ import lombok.Data;
  */
 @Data
 public class UpsertNewsCategoryRequest {
-    @NotBlank
+    @Size(min = 3, max = 25)
     String name;
 }
