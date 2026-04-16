@@ -1,5 +1,6 @@
 package com.springbox.news.web.model;
 
+import com.springbox.news.validation.Marker;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -18,13 +19,9 @@ public class NewsFilter {
     int pageNumber;
     @Min(value = 1, message = "Размер страницы не может быть меньше единиц")
     int pageSize;
-    @Min(0)
     Long userId;
-    @Size(min = 3, max = 25)
     String category;
-    @NotBlank
     String userName;
-    @Size(min = 3, max = 50)
     String title;
     Instant createdBefore;
     Instant updatedBefore;

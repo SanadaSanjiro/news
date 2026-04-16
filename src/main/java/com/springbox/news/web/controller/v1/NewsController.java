@@ -48,14 +48,16 @@ public class NewsController {
     @PutMapping("/{id}")
     @Validated({Marker.OnUpdate.class, Default.class})
     public ResponseEntity<NewsResponse> update(@PathVariable @Min(0) long id,
-                                               @RequestBody @Valid UpsertNewsRequest request) {
+                                               @RequestBody @Valid UpsertNewsRequest request,
+                                               @RequestHeader("X-User-Id") Long currentUserId) {
         News updatedNews = newsService.update(newsMapper.requestToNews(id, request));
 
         return ResponseEntity.ok(newsMapper.newsToResponse(updatedNews));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable @Min(0) long id) {
+    public ResponseEntity<Void> delete(@PathVariable @Min(0) long id,
+                                       @RequestHeader("X-User-Id") Long currentUserId) {
         newsService.deleteById(id);
 
         return ResponseEntity.noContent().build();
