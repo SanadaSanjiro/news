@@ -4,6 +4,7 @@ import com.springbox.news.model.Comment;
 import com.springbox.news.service.NewsService;
 import com.springbox.news.service.UserService;
 import com.springbox.news.web.model.UpsertCommentRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
+@RequiredArgsConstructor
 public abstract class CommentMapperDelegate implements CommentMapperV1 {
     @Autowired
     private UserService userService;

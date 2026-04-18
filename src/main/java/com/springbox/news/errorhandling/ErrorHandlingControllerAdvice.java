@@ -1,4 +1,4 @@
-package com.springbox.news.aop;
+package com.springbox.news.errorhandling;
 
 import com.springbox.news.exception.EntityNotFoundException;
 import com.springbox.news.web.model.ErrorResponse;
@@ -17,9 +17,18 @@ import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Отвечает за обработку возникающих исключений
+ */
 @ControllerAdvice
 public class ErrorHandlingControllerAdvice {
 
+    /**
+     * Обрабатывает ConstraintViolationException, выбрасываемое при передаче в запросе параметров, не
+     * соответствующих требованиям
+     * @param e ConstraintViolationException
+     * @return HttpStatus.BAD_REQUEST
+     */
     @ResponseBody
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -37,6 +46,12 @@ public class ErrorHandlingControllerAdvice {
         return new ValidationErrorResponse(violations);
     }
 
+    /**
+     * Обрабатывает MethodArgumentNotValidException, выбрасываемое при передаче в запросе параметров, не
+     * соответствующих требованиям
+     * @param e MethodArgumentNotValidException
+     * @return ValidationErrorResponse
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -49,6 +64,11 @@ public class ErrorHandlingControllerAdvice {
         return new ValidationErrorResponse(violations);
     }
 
+    /**
+     * Обрабатывает EntityNotFoundException, выбрасываемое если запрошенная сущность не найдена
+     * @param e EntityNotFoundException
+     * @return ErrorResponse
+     */
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
@@ -58,6 +78,12 @@ public class ErrorHandlingControllerAdvice {
         return new ErrorResponse(e.getMessage());
     }
 
+    /**
+     * Обрабатывает MissingRequestHeaderException, выбрасываемое при отсутствии в запросе необходимого хедера.
+     * Скорее всего, это будет пропущенный X-User-Id в запросах на изменение/удаление новостей или комментариев
+     * @param e MissingRequestHeaderException
+     * @return ErrorResponse
+     */
     @ExceptionHandler(MissingRequestHeaderException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
@@ -67,6 +93,11 @@ public class ErrorHandlingControllerAdvice {
         return new ErrorResponse(e.getMessage());
     }
 
+    /**
+     * Обрабатывает AccessDeniedException, выбрасываемое при отсутствии прав на изменение объекта
+     * @param e AccessDeniedException
+     * @return ErrorResponse
+     */
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
@@ -74,5 +105,16 @@ public class ErrorHandlingControllerAdvice {
             AccessDeniedException e
     ) {
         return new ErrorResponse(e.getMessage());
+    }
+
+    /**
+     * Обрабатывает непредвиденные исключения
+     * @return ErrorResponse
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ErrorResponse onOtherException() {
+        return new ErrorResponse("Ошибка сервера! Свяжитесь с поддержкой.");
     }
 }
