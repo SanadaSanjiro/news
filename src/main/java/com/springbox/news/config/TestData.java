@@ -69,11 +69,11 @@ public class TestData {
         return newsService.save(news);
     }
 
-    private Comment createComment(int commentNumber, User author, News news) {
+    private void createComment(int commentNumber, User author, News news) {
         Comment comment = new Comment();
         comment.setCommentAuthor(author);
         comment.setNews(news);
         comment.setText("This is comment number " + commentNumber);
-        return  commentService.save(comment);
+        commentService.save(comment);
     }
 }
