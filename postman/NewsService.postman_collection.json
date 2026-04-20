@@ -1,0 +1,1124 @@
+{
+  "info": {
+    "_postman_id": "661a3890-9ef2-4796-8e24-e2215725ed79",
+    "name": "NewsService",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "27641890"
+  },
+  "item": [
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "GetAllUsers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}user?pageSize=5&pageNumber=0",
+              "host": [
+                "{{endpoint}}user"
+              ],
+              "query": [
+                {
+                  "key": "pageSize",
+                  "value": "5"
+                },
+                {
+                  "key": "pageNumber",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "## GetAllUsers\n\nRetrieves a paginated list of all users from the API.\n\n### Query Parameters\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| `pageSize` | integer | The number of users to return per page. Default: `5`. |\n| `pageNumber` | integer | The zero-based index of the page to retrieve. Default: `0`. |\n\n### Notes\n\n- **`pageNumber`** **is zero-based** — the first page is `0`, the second is `1`, and so on.\n    \n- Adjust `pageSize` to control the volume of results returned in a single request.\n    \n- Use `pageNumber` in combination with `pageSize` to paginate through the full list of users."
+          },
+          "response": []
+        },
+        {
+          "name": "GetAllUsersBadParam",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}user?pageSize=0&pageNumber=0",
+              "host": [
+                "{{endpoint}}user"
+              ],
+              "query": [
+                {
+                  "key": "pageSize",
+                  "value": "0"
+                },
+                {
+                  "key": "pageNumber",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddUser",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"user1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}user",
+              "host": [
+                "{{endpoint}}user"
+              ]
+            },
+            "description": "## Add User\n\nCreates a new user in the system.\n\n**Method:** `POST`  \n**URL:** `{{endpoint}}user`\n\n### Request Body\n\n```json\n{\n  \"name\": \"user1\"\n}\n```\n\n| Field | Type   | Description                        |\n|-------|--------|------------------------------------|\n| `name` | string | The name of the user to be created |\n\n### Expected Behavior\n\nUpon a successful request, a new user is created with the provided `name`."
+          },
+          "response": []
+        },
+        {
+          "name": "AddUserEmptyName",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \" \"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}user",
+              "host": [
+                "{{endpoint}}user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetUserById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}user/2",
+              "host": [
+                "{{endpoint}}user"
+              ],
+              "path": [
+                "2"
+              ]
+            },
+            "description": "## Get User By ID\n\nRetrieves the details of a specific user identified by their unique ID.\n\n### Endpoint\n\n```\nGET {{endpoint}}user/2\n\n ```\n\nThe `{{endpoint}}` variable represents the base URL of the API and should be defined in the active Postman environment (e.g., `https://api.example.com/`).\n\n### URL Structure\n\n| Segment | Description |\n| --- | --- |\n| `{{endpoint}}` | Base URL, resolved from the active environment variable |\n| `user/` | Resource path targeting the users collection |\n| `2` | The ID of the user to retrieve (currently hardcoded as `2`; replace with the desired user's ID) |\n\n### Path Parameter\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| `id` | integer | The unique identifier of the target user. Currently set to `2`. |\n\n### Expected Response\n\nOn success, the endpoint returns a **200 OK** status along with a JSON object containing the details of the requested user, such as:\n\n``` json\n{\n    \"id\": 2,\n    \"name\": \"User 2\",\n    \"createdAt\": \"2026-04-20T03:42:36.319723Z\",\n    \"updatedAt\": \"2026-04-20T03:42:36.319723Z\"\n}\n\n ```\n\n> **Note:** The user ID is hardcoded as `2` in the current URL. To query a different user, update the path with the appropriate user ID or use a path variable (e.g., `{{endpoint}}user/{{userId}}`)."
+          },
+          "response": []
+        },
+        {
+          "name": "GetUserByIdBadId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}user/-2",
+              "host": [
+                "{{endpoint}}user"
+              ],
+              "path": [
+                "-2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateUser",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"superuser\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}user/10",
+              "host": [
+                "{{endpoint}}user"
+              ],
+              "path": [
+                "10"
+              ]
+            },
+            "description": "## UpdateUser\n\nUpdates an existing user's information by their user ID.\n\n**Method:** PUT  \n**URL:** `{{endpoint}}user/{id}`\n\n## Path Parameters\n\n| Parameter | Description |\n| --- | --- |\n| `id` | The unique identifier of the user to update (e.g. `10`) |\n\n## Request Body\n\nSend a JSON object with the fields you want to update.\n\n``` json\n{\n    \"name\": \"superuser\"\n}\n\n ```\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `name` | string | The new name for the user |\n\n## Response\n\nReturns the updated user object on success."
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateUserBadId",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"superuser\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}user/-1",
+              "host": [
+                "{{endpoint}}user"
+              ],
+              "path": [
+                "-1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateUserEmptyName",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \" \"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}user/1",
+              "host": [
+                "{{endpoint}}user"
+              ],
+              "path": [
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteUserById",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}user/10",
+              "host": [
+                "{{endpoint}}user"
+              ],
+              "path": [
+                "10"
+              ]
+            },
+            "description": "## DeleteUserById\n\nDeletes a specific user from the system by their unique ID.\n\n### Endpoint\n\n```\nDELETE {{endpoint}}user/:id\n```\n\n### Path Parameter\n\n| Parameter | Description |\n|-----------|-------------|\n| `id` | The unique identifier of the user to delete. In the current request, `10` is used as the user ID. |\n\n### Successful Response\n\nA successful request typically returns one of the following:\n\n- **`200 OK`** — The user was deleted, and the server returns a confirmation body.\n- **`204 No Content`** — The user was deleted successfully, with no response body.\n\n### Notes\n\n> ⚠️ **This action is irreversible.** Once a user is deleted, the data cannot be recovered. Ensure the correct user ID is provided before sending the request."
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteUserByIdBadId",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}user/-2",
+              "host": [
+                "{{endpoint}}user"
+              ],
+              "path": [
+                "-2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "NewsCategory",
+      "item": [
+        {
+          "name": "GetAllCategories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}category?pageSize=5&pageNumber=0",
+              "host": [
+                "{{endpoint}}category"
+              ],
+              "query": [
+                {
+                  "key": "pageSize",
+                  "value": "5"
+                },
+                {
+                  "key": "pageNumber",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "## GetAllCategories\n\nRetrieves all available categories with support for pagination.\n\n**Query Parameters:**\n\n| Parameter | Type | Default | Description |\n| --- | --- | --- | --- |\n| `pageSize` | integer | `5` | The number of category items to return per page. |\n| `pageNumber` | integer | `0` | The zero-based index of the page to retrieve. Use `0` for the first page, `1` for the second, and so on. |\n\n**Example:** To get the first 5 categories, use `pageSize=5&pageNumber=0`. To get the next page, increment `pageNumber` to `1`."
+          },
+          "response": []
+        },
+        {
+          "name": "GetAllCategoriesBadParam",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}category?pageSize=-1&pageNumber=1",
+              "host": [
+                "{{endpoint}}category"
+              ],
+              "query": [
+                {
+                  "key": "pageSize",
+                  "value": "-1"
+                },
+                {
+                  "key": "pageNumber",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddCategory",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"category1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}category",
+              "host": [
+                "{{endpoint}}category"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetCategoryById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}category/1",
+              "host": [
+                "{{endpoint}}category"
+              ],
+              "path": [
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetCategoryBuIdBadParam",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}category/-1",
+              "host": [
+                "{{endpoint}}category"
+              ],
+              "path": [
+                "-1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateCategory",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Updated category\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}category/10",
+              "host": [
+                "{{endpoint}}category"
+              ],
+              "path": [
+                "10"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateCategoryBadId",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"War and Peace\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}category/-1",
+              "host": [
+                "{{endpoint}}category"
+              ],
+              "path": [
+                "-1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateCategoryEmptyName",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}category/2",
+              "host": [
+                "{{endpoint}}category"
+              ],
+              "path": [
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteCategory",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}category/10",
+              "host": [
+                "{{endpoint}}category"
+              ],
+              "path": [
+                "10"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteCategoryBadParam",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}category/-1",
+              "host": [
+                "{{endpoint}}category"
+              ],
+              "path": [
+                "-1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "News",
+      "item": [
+        {
+          "name": "GetAllNews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}news?pageSize=5&pageNumber=0",
+              "host": [
+                "{{endpoint}}news"
+              ],
+              "query": [
+                {
+                  "key": "pageSize",
+                  "value": "5"
+                },
+                {
+                  "key": "pageNumber",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAllNewsBadParam",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}news?pageSize=-1&pageNumber=1",
+              "host": [
+                "{{endpoint}}news"
+              ],
+              "query": [
+                {
+                  "key": "pageSize",
+                  "value": "-1"
+                },
+                {
+                  "key": "pageNumber",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddNews",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"authorId\": 1,\r\n    \"categoryId\": 1,\r\n    \"title\": \"Good news tittle\",\r\n    \"text\": \"Good news\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}news",
+              "host": [
+                "{{endpoint}}news"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddNewsBadRequest",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"authorId\": 1,\r\n    \"categoryId\": 1,\r\n    \"text\": \"Test news\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}news",
+              "host": [
+                "{{endpoint}}news"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetNewsById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}news/1",
+              "host": [
+                "{{endpoint}}news"
+              ],
+              "path": [
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetNewsByIdBadParam",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}news/-1",
+              "host": [
+                "{{endpoint}}news"
+              ],
+              "path": [
+                "-1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateNews",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-User-Id",
+                "value": "1",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"authorId\": 1,\r\n    \"categoryId\": 2,\r\n    \"title\": \"Updated news\",\r\n    \"text\": \"This news was updated!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}news/10",
+              "host": [
+                "{{endpoint}}news"
+              ],
+              "path": [
+                "10"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateNewsBadUserHeader",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-User-Id",
+                "value": "2",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"authorId\": 1,\r\n    \"categoryId\": 2,\r\n    \"title\": \"Excellent news\",\r\n    \"text\": \"Good news turned into great news!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}news/10",
+              "host": [
+                "{{endpoint}}news"
+              ],
+              "path": [
+                "10"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateNewsBadId",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"authorId\": 1,\r\n    \"categoryId\": 2,\r\n    \"title\": \"Excellent news\",\r\n    \"text\": \"Good news turned into great news!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}news/-2",
+              "host": [
+                "{{endpoint}}news"
+              ],
+              "path": [
+                "-2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteNews",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-User-Id",
+                "value": "3",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{endpoint}}news/10",
+              "host": [
+                "{{endpoint}}news"
+              ],
+              "path": [
+                "10"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteNewsBadUserHeader",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-User-Id",
+                "value": "40",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{endpoint}}news/4",
+              "host": [
+                "{{endpoint}}news"
+              ],
+              "path": [
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteNewsBadParam",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}news/-3",
+              "host": [
+                "{{endpoint}}news"
+              ],
+              "path": [
+                "-3"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Comment",
+      "item": [
+        {
+          "name": "AddComment",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"newsId\": 1,\r\n    \"userId\": 3,\r\n    \"text\": \"New comment\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}comment",
+              "host": [
+                "{{endpoint}}comment"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddCommentBadUserId",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"newsId\": 1,\r\n    \"userId\": -3,\r\n    \"text\": \"New comment\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}comment",
+              "host": [
+                "{{endpoint}}comment"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddCommentEmptyText",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"newsId\": 1,\r\n    \"userId\": 3,\r\n    \"text\": \" \"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}comment",
+              "host": [
+                "{{endpoint}}comment"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetCommentById",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}comment/2",
+              "host": [
+                "{{endpoint}}comment"
+              ],
+              "path": [
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetCommentByIdBadId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}comment/-2",
+              "host": [
+                "{{endpoint}}comment"
+              ],
+              "path": [
+                "-2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getCommentsByNewsID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}comment/?newsid=1",
+              "host": [
+                "{{endpoint}}comment"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "newsid",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateComment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-User-Id",
+                "value": "3",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"newsId\": 1,\r\n    \"userId\": 3,\r\n    \"text\": \"Updated comment\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}comment/10",
+              "host": [
+                "{{endpoint}}comment"
+              ],
+              "path": [
+                "10"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateCommentBadUserHeader",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-User-Id",
+                "value": "1",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"newsId\": 1,\r\n    \"userId\": 3,\r\n    \"text\": \"Updated comment\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}comment/10",
+              "host": [
+                "{{endpoint}}comment"
+              ],
+              "path": [
+                "10"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateCommentBadId",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-User-Id",
+                "value": "1",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"newsId\": 1,\r\n    \"userId\": 3,\r\n    \"text\": \"Excuse me, man!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}comment/-1",
+              "host": [
+                "{{endpoint}}comment"
+              ],
+              "path": [
+                "-1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateCommentEmptyText",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"newsId\": 1,\r\n    \"userId\": 3,\r\n    \"text\": \" \"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{endpoint}}comment/1",
+              "host": [
+                "{{endpoint}}comment"
+              ],
+              "path": [
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteComment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-User-Id",
+                "value": "3",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{endpoint}}comment/10",
+              "host": [
+                "{{endpoint}}comment"
+              ],
+              "path": [
+                "10"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteCommentBadUserHeader",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-User-Id",
+                "value": "100",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{endpoint}}comment/2",
+              "host": [
+                "{{endpoint}}comment"
+              ],
+              "path": [
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteCommentBadId",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{endpoint}}comment/-1",
+              "host": [
+                "{{endpoint}}comment"
+              ],
+              "path": [
+                "-1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "endpoint",
+      "value": ""
+    }
+  ]
+}

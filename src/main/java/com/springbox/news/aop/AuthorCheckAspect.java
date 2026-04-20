@@ -1,5 +1,6 @@
 package com.springbox.news.aop;
 
+import com.springbox.news.exception.ForbiddenException;
 import com.springbox.news.model.Comment;
 import com.springbox.news.model.News;
 import com.springbox.news.service.CommentService;
@@ -8,9 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
-
-import java.nio.file.AccessDeniedException;
-
 
 /**
  * Класс предоставляет адвайсы, контролирующие, что изменение статьи или комментария
@@ -28,16 +26,16 @@ public class AuthorCheckAspect {
      * Проверяет соответствие id пользователя из хедера X-User-Id автору комментария
      * @param id long ID комментария на удаление
      * @param currentUserId ID пользователя, отправившего запрос, берется из хедера  X-User-Id
-     * @throws AccessDeniedException если id пользователя, отправившего запрос, не соответствует автору комментария,
+     * @throws ForbiddenException если id пользователя, отправившего запрос, не соответствует автору комментария,
      * выбрасывается исключение
      */
     @Before(value = "execution(* com.springbox.news.web.controller.v1.CommentController.delete(..))" +
             " && args(id, currentUserId)", argNames = "id,currentUserId")
-    public void checkCommentBeforeDelete(long id, Long currentUserId) throws AccessDeniedException {
+    public void checkCommentBeforeDelete(long id, Long currentUserId) throws ForbiddenException {
         Comment comment = commentService.findById(id);
 
         if (!(comment.getCommentAuthor().getId() == currentUserId)) {
-            throw new AccessDeniedException("У вас нет прав на удаление этого комментария!");
+            throw new ForbiddenException("У вас нет прав на удаление этого комментария!");
         }
     }
 
@@ -45,16 +43,16 @@ public class AuthorCheckAspect {
      * Адвайс, контролирующий обработку запросов на изменение комментариев в соответствующем контроллере.
      * @param id long ID изменяемого комментария
      * @param currentUserId ID пользователя, отправившего запрос, берется из хедера X-User-Id
-     * @throws AccessDeniedException если id пользователя, отправившего запрос, не соответствует автору комментария,
+     * @throws ForbiddenException если id пользователя, отправившего запрос, не соответствует автору комментария,
      * выбрасывается исключение
      */
     @Before(value = "execution(* com.springbox.news.web.controller.v1.CommentController.update(..))" +
             " && args(id, .., currentUserId)", argNames = "id,currentUserId")
-    public void checkCommentBeforeUpdate(long id, Long currentUserId) throws AccessDeniedException {
+    public void checkCommentBeforeUpdate(long id, Long currentUserId) throws ForbiddenException {
         Comment comment = commentService.findById(id);
 
         if (!(comment.getCommentAuthor().getId() == currentUserId)) {
-            throw new AccessDeniedException("У вас нет прав на изменение этого комментария!");
+            throw new ForbiddenException("У вас нет прав на изменение этого комментария!");
         }
     }
 
@@ -62,16 +60,16 @@ public class AuthorCheckAspect {
      * Адвайс, контролирующий обработку запросов на удаление новостей в соответствующем контроллере.
      * @param id long ID новости на удаление
      * @param currentUserId ID пользователя, отправившего запрос, берется из хедера X-User-Id
-     * @throws AccessDeniedException если id пользователя, отправившего запрос, не соответствует автору новости,
+     * @throws ForbiddenException если id пользователя, отправившего запрос, не соответствует автору новости,
      * выбрасывается исключение
      */
     @Before(value="execution(* com.springbox.news.web.controller.v1.NewsController.delete(..)) " +
             " && args(id, currentUserId)", argNames = "id, currentUserId")
-    public void checkNewsBeforeDelete(long id, Long currentUserId) throws AccessDeniedException {
+    public void checkNewsBeforeDelete(long id, Long currentUserId) throws ForbiddenException {
         News news = newsService.findById(id);
 
         if (!(news.getNewsAuthor().getId() == currentUserId)) {
-            throw new AccessDeniedException("У вас нет прав на удаление этой новости!");
+            throw new ForbiddenException("У вас нет прав на удаление этой новости!");
         }
     }
 
@@ -79,16 +77,16 @@ public class AuthorCheckAspect {
      * Адвайс, контролирующий обработку запросов на изменение новостей в соответствующем контроллере.
      * @param id long ID изменяемой новости
      * @param currentUserId ID пользователя, отправившего запрос, берется из хедера X-User-Id
-     * @throws AccessDeniedException если id пользователя, отправившего запрос, не соответствует автору новости,
+     * @throws ForbiddenException если id пользователя, отправившего запрос, не соответствует автору новости,
      * выбрасывается исключение
      */
     @Before(value="execution(* com.springbox.news.web.controller.v1.NewsController.update(..)) " +
             " && args(id, .., currentUserId)", argNames = "id, currentUserId")
-    public void checkNewsBeforeUpdating(long id, Long currentUserId) throws AccessDeniedException {
+    public void checkNewsBeforeUpdating(long id, Long currentUserId) throws ForbiddenException {
         News news = newsService.findById(id);
 
         if (!(news.getNewsAuthor().getId() == currentUserId)) {
-            throw new AccessDeniedException("У вас нет прав на изменение этой новости!");
+            throw new ForbiddenException("У вас нет прав на изменение этой новости!");
         }
     }
 }

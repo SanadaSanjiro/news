@@ -1,5 +1,6 @@
 package com.springbox.news.config;
 
+import com.springbox.news.exception.EntityNotFoundException;
 import com.springbox.news.model.Comment;
 import com.springbox.news.model.News;
 import com.springbox.news.model.NewsCategory;
@@ -13,6 +14,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProp
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * Вносит в БД тестовые данные, если настройка app.config.testdata.enabled = true
@@ -29,11 +32,19 @@ public class TestData {
 
     @EventListener(ContextRefreshedEvent.class)
     public void addTestData() {
-        for (int i = 1; i < 10; i++) {
-            NewsCategory category = createNewsCategory(i);
-            User user = createUser(i);
-            News news = createNews(i , user, category);
-            Comment comment = createComment(i, user, news);
+        User firstUser = null;
+        try {
+            firstUser = userService.findById(1);
+        } catch (EntityNotFoundException e) {
+            System.out.println("User table not empty, skipping test data creation");
+        }
+        if (Objects.isNull(firstUser)){
+            for (int i = 1; i < 10; i++) {
+                NewsCategory category = createNewsCategory(i);
+                User user = createUser(i);
+                News news = createNews(i, user, category);
+                createComment(i, user, news);
+            }
         }
     }
 

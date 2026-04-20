@@ -1,6 +1,7 @@
 package com.springbox.news.errorhandling;
 
 import com.springbox.news.exception.EntityNotFoundException;
+import com.springbox.news.exception.ForbiddenException;
 import com.springbox.news.web.model.ErrorResponse;
 import com.springbox.news.web.model.ValidationErrorResponse;
 import com.springbox.news.web.model.Violation;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -98,11 +98,11 @@ public class ErrorHandlingControllerAdvice {
      * @param e AccessDeniedException
      * @return ErrorResponse
      */
-    @ExceptionHandler(AccessDeniedException.class)
+    @ExceptionHandler(ForbiddenException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
-    public ErrorResponse onAccessDeniedException(
-            AccessDeniedException e
+    public ErrorResponse onForbiddenException(
+            ForbiddenException e
     ) {
         return new ErrorResponse(e.getMessage());
     }
@@ -114,7 +114,8 @@ public class ErrorHandlingControllerAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public ErrorResponse onOtherException() {
+    public ErrorResponse onOtherException(Exception e) {
+        e.printStackTrace();
         return new ErrorResponse("Ошибка сервера! Свяжитесь с поддержкой.");
     }
 }
