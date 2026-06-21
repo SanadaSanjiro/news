@@ -37,3 +37,25 @@ public abstract class CommentMapperDelegate implements CommentMapperV1 {
         return comment;
     }
 }
+/* Для исключения задвоенных запросов к БД в делегате и в сервисе следует переписать код
+метода этого делегата в следующем виде:
+@Override
+public Comment requestToComment(UpsertCommentRequest request) {
+    Comment comment = new Comment();
+    comment.setText(request.getText());
+
+    // Создаем заглушку автора только с ID
+    User author = new User();
+    author.setId(request.getUserId());
+    comment.setCommentAuthor(author);
+
+    // Создаем заглушку новости только с ID
+    News news = new News();
+    news.setId(request.getNewsId());
+    comment.setNews(news);
+
+    return comment;
+}
+
+но в целях сохранения бесценных знаний о создании делегатов, работающих с сервисами, оставляем код как есть
+ */

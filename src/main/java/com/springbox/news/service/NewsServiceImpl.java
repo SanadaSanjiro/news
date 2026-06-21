@@ -53,7 +53,7 @@ public class NewsServiceImpl implements NewsService{
         News existedNews = findById(news.getId());
         BeanUtils.copyNonNullProperties(news, existedNews);
         existedNews.setNewsAuthor(author);
-        news.setCategory(category);
+        existedNews.setCategory(category);
         return repository.save(existedNews);
     }
 
